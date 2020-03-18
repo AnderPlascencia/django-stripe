@@ -1,5 +1,5 @@
 {
-  "python.pythonPath": "D:\\PC\\Anaconda\\envs\\django37\\python.exe",
+  "python.pythonPath": "/home/ander/miniconda3/envs/django37/bin/python",
   "editor.formatOnSave": true,
   "python.linting.pycodestyleEnabled": true,
   "python.linting.pylintEnabled": true,
