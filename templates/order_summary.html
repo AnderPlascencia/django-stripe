@@ -51,6 +51,10 @@
                 </tr>
                 {% endfor %}
                 {% if object.get_total %}
+                <tr class="text-success">
+                    <td colspan="4"><b>Coupon:</b></td>
+                    <td colspan="4"><b>-${{object.coupon.amount}}</b></td>
+                </tr>
                 <tr>
                     <td colspan="4"><b>Order Total:</b></td>
                     <td><b>${{object.get_total}}</b></td>

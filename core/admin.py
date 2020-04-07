@@ -8,7 +8,7 @@ class OrderAdmin(admin.ModelAdmin):
 
 
 class CouponAdmin(admin.ModelAdmin):
-    list_display = ['code', 'discount', 'active']
+    list_display = ['code', 'amount', 'active']
 
 
 admin.site.register(Item)

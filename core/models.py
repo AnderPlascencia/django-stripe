@@ -87,6 +87,7 @@ class Order(models.Model):
         total = 0
         for order_item in self.items.all():
             total += order_item.get_total_item_price()
+        total -= self.coupon.amount
         return total
 
 
@@ -115,8 +116,9 @@ class Payment(models.Model):
 
 class Coupon(models.Model):
     code = models.CharField(max_length=20)
-    discount = models.IntegerField(
-        default=0, validators=[MinValueValidator(0), MaxValueValidator(100)])
+    amount = models.IntegerField()
+    # discount = models.IntegerField(
+    #     default=0, validators=[MinValueValidator(0), MaxValueValidator(100)])
     active = models.BooleanField(default=False)
 
     def __str__(self):
