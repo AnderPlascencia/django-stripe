@@ -11,8 +11,13 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 from .forms import CheckoutForm, CouponForm
 import stripe
 
+import string
+import random
 stripe.api_key = settings.STRIPE_SECRET_KEY
 
+
+def create_ref_code():
+    return "".join(random.choices(string.ascii_lowercase + string.digits, k=20))
 
 class CheckoutView(View):
     def get(self, *args, **kwargs):
@@ -109,6 +114,7 @@ class PaymentView(View):
 
             order.ordered = True
             order.payment = payment
+            order.ref_code = create_ref_code()
             order.save()
 
             messages.success(self.request, "Your order was successfull")
@@ -124,7 +130,6 @@ class PaymentView(View):
 
         except stripe.error.InvalidRequestError as e:
             messages.warning(self.request, "Invalid parameters")
-            print(self.request, e)
             return redirect("/")
 
         except stripe.error.AuthenticationError as e:
@@ -283,3 +288,6 @@ class AddCoupon(View):
             except ObjectDoesNotExist:
                 messages.info(self.request, "You dont have an active order.")
                 return redirect("core:checkout")
+
+class RequestRefundView(View):
+    def post(self, *args, **kwargs):

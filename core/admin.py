@@ -4,7 +4,37 @@ from .models import Item, OrderItem, Order, Payment, BillingAddress, Coupon
 
 
 class OrderAdmin(admin.ModelAdmin):
-    list_display = ['user', 'ordered']
+    list_display = [
+        'user', 
+        'ordered', 
+        'being_delivered', 
+        'received', 
+        'request_refund', 
+        'granted_refund',
+        'billing_address',
+        'payment',
+        'coupon'
+    ]
+
+    list_display_links = [
+        'user',
+        'billing_address',
+        'payment',
+        'coupon'
+    ]
+
+    list_filter = [
+        'ordered', 
+        'being_delivered', 
+        'received', 
+        'request_refund', 
+        'granted_refund'
+    ]
+
+    search_fields = [
+        'user__username',
+        'ref_code'
+    ]
 
 
 class CouponAdmin(admin.ModelAdmin):

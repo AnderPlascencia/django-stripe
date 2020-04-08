@@ -69,6 +69,7 @@ class OrderItem(models.Model):
 class Order(models.Model):
     user = models.ForeignKey(settings.AUTH_USER_MODEL,
                              on_delete=models.CASCADE)
+    ref_code = models.CharField(max_length=20)
     items = models.ManyToManyField(OrderItem)
     start_date = models.DateTimeField(auto_now_add=True)
     ordered_date = models.DateTimeField()
@@ -79,6 +80,10 @@ class Order(models.Model):
         'Payment', on_delete=models.SET_NULL, blank=True, null=True)
     coupon = models.ForeignKey(
         'Coupon', on_delete=models.SET_NULL, blank=True, null=True)
+    being_delivered = models.BooleanField(default=False)
+    received = models.BooleanField(default=False)
+    request_refund = models.BooleanField(default=False)
+    granted_refund = models.BooleanField(default=False)
 
     def __str__(self):
         return self.user.username
@@ -87,7 +92,8 @@ class Order(models.Model):
         total = 0
         for order_item in self.items.all():
             total += order_item.get_total_item_price()
-        total -= self.coupon.amount
+        if self.coupon:
+            total -= self.coupon.amount
         return total
 
 
