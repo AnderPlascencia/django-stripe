@@ -1,5 +1,5 @@
 {
-  "python.pythonPath": "D:\\PC\\Anaconda\\envs\\django37\\python.exe",
+  "python.pythonPath": "C:\\Users\\Ander\\Miniconda3\\envs\\ecommerce\\python.exe",
   "editor.formatOnSave": true,
   "python.linting.pycodestyleEnabled": true,
   "python.linting.pylintEnabled": true,
